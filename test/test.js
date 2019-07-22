@@ -70,4 +70,19 @@ describe( 'Tests', ( done ) =>
         assert.deepStrictEqual( QS.parse('foo+bar='), { 'foo bar': '' });
         assert.deepStrictEqual( QS.parse('foo+bar=+'), { 'foo bar': ' ' });
     });
+
+    it('should parse cookies', function()
+	{
+        assert.deepStrictEqual( QS.parseCookies(''), {});
+        assert.deepStrictEqual( QS.parseCookies(), {});
+        assert.deepStrictEqual( QS.parseCookies(undefined), {});
+        assert.deepStrictEqual( QS.parseCookies(null), {});
+        assert.deepStrictEqual( QS.parseCookies('    '), {});
+        assert.deepStrictEqual( QS.parseCookies('foo=bar'), { 'foo': 'bar' });
+        assert.deepStrictEqual( QS.parseCookies('  foo  =   bar    '), { 'foo': 'bar' });
+        assert.deepStrictEqual( QS.parseCookies('foo=bar; '), { 'foo': 'bar' });
+        assert.deepStrictEqual( QS.parseCookies('foo=bar; bar'), { 'foo': 'bar' });
+        assert.deepStrictEqual( QS.parseCookies('foo=bar; bar = foo'), { 'foo': 'bar', 'bar': 'foo' });
+        assert.deepStrictEqual( QS.parseCookies('foo=bar; bar = foo;'), { 'foo': 'bar', 'bar': 'foo' });
+    });
 });
